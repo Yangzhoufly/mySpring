@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xmlns xml namespace:xml命名空间-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--1.构造方法注入=属性值-->
+    <bean id="stu" class="com.fly.model.Student">
+        <!-- 相当调用 public Student(String username, String password) 构造方法-->
+        <constructor-arg name="username" value="fly"></constructor-arg>
+        <constructor-arg name="password" value="123"></constructor-arg>
+    </bean>
+
+    <bean id="stu2" class="com.fly.model.Student">
+        <!--相当调用 public Student(String username, int age) 构造方法-->
+        <constructor-arg name="username" value="fly"></constructor-arg>
+        <constructor-arg name="age" value="30"></constructor-arg>
+    </bean>
+
+    <!-- 通过索引加类型 给构造方法赋值-->
+    <bean id="stu3" class="com.fly.model.Student">
+        <constructor-arg index="0" value="fly" type="java.lang.String"></constructor-arg>
+        <constructor-arg index="1" value="12345" type="java.lang.String"></constructor-arg>
+    </bean>
+
+    <!-- 2.通过set方法往bean注入属性值-->
+    <bean id="stu4" class="com.fly.model.Student">
+        <property name="username" value="fly"></property>
+        <property name="password" value="123456"></property>
+        <property name="age" value="12"></property>
+    </bean>
+
+
+    <!--3.通过p命名空间注入-->
+    <bean id="stu5" class="com.fly.model.Student"
+          p:username="fly"
+          p:password="6666"
+          p:age="32">
+    </bean>
+</beans>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xmlns xml namespace:xml命名空间-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <!--  配置UserService-->
+    <bean id="workerService" class="com.fly.proxy.jdk.service.WorkerServiceImpl"></bean>
+
+    <!-- 配置切面对象-->
+    <bean id="myAspect" class="com.fly.proxy.jdk.service.MyAspect"></bean>
+
+    <!-- 配置 aop -->
+    <aop:config>
+
+        <!-- aop:指定切面-->
+        <aop:aspect ref="myAspect">
+            <!--定义一个切入点-->
+            <aop:pointcut id="myPointcut" expression="execution(* com.fly.proxy.jdk.service.WorkerServiceImpl.*(..))"/>
+
+            <!-- 配置前置通知...-->
+            <aop:before method="before" pointcut-ref="myPointcut"/>
+            <aop:after-returning method="afterReturning" pointcut-ref="myPointcut" returning="ret"/>
+
+            <aop:around method="around" pointcut-ref="myPointcut"></aop:around>
+
+            <aop:after-throwing method="afterThrowing" pointcut-ref="myPointcut" throwing="throwable"></aop:after-throwing>
+
+        </aop:aspect>
+
+    </aop:config>
+</beans>

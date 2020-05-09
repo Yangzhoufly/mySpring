@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--JdbcDaoSupport
+    可以不用自己创建 jdbcTemplate
+    -->
+
+    <!-- 配置DBCP dataSource 对象-->
+    <bean id="dataSource_dbcp" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/test"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+    </bean>
+
+    <!-- 配置c3p0 dataSource 对象-->
+    <bean id="dataSource_c3p0" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/test"/>
+        <property name="user" value="root"/>
+        <property name="password" value="root"/>
+    </bean>
+
+    <!-- 配置dao-->
+    <bean id="userDao" class="com.fly.jdbcTemplate.dao.UserDao02">
+        <property name="dataSource" ref="dataSource_c3p0"></property>
+    </bean>
+
+
+</beans>

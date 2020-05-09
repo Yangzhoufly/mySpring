@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <!--
+    测试从properties文件中读取属性
+    -->
+
+    <!-- 读取db.properties数据-->
+    <context:property-placeholder location="classpath:db.properties"></context:property-placeholder>
+
+    <!-- 配置c3p0 dataSource 对象-->
+    <bean id="dataSource_c3p0" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${driverClass}"/>
+        <property name="jdbcUrl" value="${jdbcUrl}"/>
+        <property name="user" value="${user}"/>
+        <property name="password" value="${password}"/>
+    </bean>
+
+    <!-- 配置dao-->
+    <bean id="userDao" class="com.fly.jdbcTemplate.dao.UserDao02">
+        <property name="dataSource" ref="dataSource_c3p0"></property>
+    </bean>
+
+
+</beans>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xmlns xml namespace:xml命名空间-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--
+ 测试TreeNode
+    -->
+    <!--创建一个地址对象-->
+
+    <bean id="left" class="com.fly.model.TreeNode" scope="singleton">
+        <property name="val" value="1"></property>
+    </bean>
+
+    <bean id="right" class="com.fly.model.TreeNode" scope="prototype">
+        <property name="val" value="2"></property>
+    </bean>
+
+    <bean id="root" class="com.fly.model.TreeNode">
+        <property name="val" value="0"></property>
+        <property name="left" ref="left"></property>
+        <property name="right" value="#{right}"></property>
+    </bean>
+
+</beans>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xmlns xml namespace:xml命名空间-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--半自动-->
+
+
+    <!--  配置UserService-->
+    <bean id="workerService" class="com.fly.proxy.jdk.service.WorkerServiceImpl"></bean>
+
+    <!--  配置切面类对象-->
+    <bean id="myAspect" class="com.fly.proxy.aop.MyAspect"></bean>
+
+    <!-- 配置代理对象
+        默认情况下Spring的AOP生成的代理是JDK的Proxy实现的
+    -->
+
+    <bean id="serviceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+
+        <!-- 接口 :如果只是一个接口，就写Value,如果是多个接口就写List-->
+        <property name="interfaces" value="com.fly.proxy.jdk.service.IWorkerService">
+        </property>
+
+        <!-- 目标对象 -->
+        <property name="target" ref="workerService"/>
+
+        <!-- 切面类-->
+        <property name="interceptorNames" value="myAspect"></property>
+
+        <!-- 配置使用cglib生成-->
+        <property name="optimize" value="true"></property>
+
+    </bean>
+</beans>
